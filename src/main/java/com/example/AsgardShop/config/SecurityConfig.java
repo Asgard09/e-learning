@@ -42,6 +42,8 @@ public class SecurityConfig {
                         req->req.requestMatchers("auth/login/**","auth/register/**", "auth/refresh_token/**")
                                 .permitAll()
                                 .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+                                .requestMatchers("/course/create", "/course/delete").hasAuthority("ADMIN")
+                                .requestMatchers("/enrollment/enroll").hasAuthority("STUDENT")
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsServiceImp)

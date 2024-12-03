@@ -1,8 +1,11 @@
 package com.example.AsgardShop.model;
 
 
+import com.example.AsgardShop.base.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +36,7 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(value = EnumType.STRING)
-    private Role role;
+    private Role role = Role.STUDENT;
 
     @Column(name = "created_at")
     private Date createdAt;

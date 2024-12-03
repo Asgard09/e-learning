@@ -1,4 +1,4 @@
-package com.example.AsgardShop.model;
+package com.example.AsgardShop.base;
 
 public enum Role {
 
