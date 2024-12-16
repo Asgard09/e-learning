@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,4 +35,7 @@ public class Course {
 
     @Enumerated(value = EnumType.STRING)
     private CourseStatus courseStatus;
+
+    @OneToMany(mappedBy = "course")
+    private List<Question> questions;
 }

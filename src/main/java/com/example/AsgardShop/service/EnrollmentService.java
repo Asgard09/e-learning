@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EnrollmentService {
@@ -49,5 +51,25 @@ public class EnrollmentService {
         enrollment.setStudyStatus(StudyStatus.STUDYING); // Adjust status as needed
 
         enrollmentRepository.save(enrollment);
+    }
+
+    public List<Course> getCompletedCourses(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        
+        List<Enrollment> completedEnrollments = enrollmentRepository.findByUserAndProgress(user, 100.0);
+        return completedEnrollments.stream()
+                .map(Enrollment::getCourse)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> getStudentsInCourse(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
+        
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse(course);
+        return enrollments.stream()
+                .map(Enrollment::getUser)
+                .collect(Collectors.toList());
     }
 }
