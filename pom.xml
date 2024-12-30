@@ -27,7 +27,8 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<maven.compiler.source>3.8</maven.compiler.source>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -119,7 +120,9 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
 		</plugins>
+		<finalName>springboot-mysql-docker</finalName>
 	</build>
 
 </project>
