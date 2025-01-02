@@ -1,5 +1,6 @@
 package com.example.AsgardShop.controller;
 
+import com.example.AsgardShop.exception.ApiRequestException;
 import com.example.AsgardShop.model.Course;
 import com.example.AsgardShop.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class CourseController {
     @GetMapping("/names")
     public ResponseEntity<List<String>> getAllCourseNames() {
         List<String> courseNames = courseService.getAllCourseNames();
+        if (courseNames != null){
+            throw new ApiRequestException("Course not found");
+        }
         return new ResponseEntity<>(courseNames, HttpStatus.OK);
     }
 

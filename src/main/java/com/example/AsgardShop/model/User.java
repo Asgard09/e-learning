@@ -3,6 +3,7 @@ package com.example.AsgardShop.model;
 
 import com.example.AsgardShop.base.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NonNull;
@@ -29,9 +30,12 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
+    @Email()
+    @NotNull
     @Column(name = "email")
     private String email;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 

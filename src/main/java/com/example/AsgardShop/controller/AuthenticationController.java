@@ -2,6 +2,7 @@ package com.example.AsgardShop.controller;
 
 import com.example.AsgardShop.dto.request.LoginDTO;
 import com.example.AsgardShop.dto.response.AuthenticationResponse;
+import com.example.AsgardShop.exception.ApiRequestException;
 import com.example.AsgardShop.model.User;
 import com.example.AsgardShop.service.security.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,11 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
-        return ResponseEntity.ok(authService.register(request));
+        try {
+            return ResponseEntity.ok(authService.register(request));
+        }catch (Exception e){
+            throw new ApiRequestException("Let's enter valid data");
+        }
     }
 
     @PostMapping("/login")

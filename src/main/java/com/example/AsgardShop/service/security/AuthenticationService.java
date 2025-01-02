@@ -3,6 +3,7 @@ package com.example.AsgardShop.service.security;
 
 import com.example.AsgardShop.dto.request.LoginDTO;
 import com.example.AsgardShop.dto.response.AuthenticationResponse;
+import com.example.AsgardShop.exception.ApiRequestException;
 import com.example.AsgardShop.model.Token;
 import com.example.AsgardShop.model.User;
 import com.example.AsgardShop.repository.TokenRepository;
@@ -71,12 +72,16 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(LoginDTO request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        }catch (Exception e) {
+            throw new ApiRequestException("Invalid email/password");
+        }
 
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String accessToken = jwtService.generateAccessToken(user);
